@@ -28,21 +28,25 @@ line.drow_line()
 while True:
     screen.update()
     time.sleep(0.05)
-    if ball.distance(paddle_right) < 50 and ball.xcor() > 320 or ball.distance(paddle_left) < 50 and ball.xcor() < -320:
+
+    if ball.distance(paddle_right) < 40 and ball.xcor() > 320 and paddle_right.xcor() > ball.xcor() or ball.distance(paddle_left) < 40 and ball.xcor() < -320 and paddle_left.xcor() < ball.xcor():
         ball.bounce_paddle()
+
     ball.move_ball()
     
     if ball.ycor() > 280 or ball.ycor()< - 280:
         ball.bounce_wall()
+        
     elif ball.xcor() > 400:
         ball.goto(0,0)
-        score_l.scorel +=1
+        score_l.score +=1
         score_l.print_score()
         
     elif ball.xcor() < -400:
         ball.goto(0,0)
-        score_r.scorer += 1
+        score_r.score += 1
         score_r.print_score()
+
         
 
     
