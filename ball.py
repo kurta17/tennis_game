@@ -19,6 +19,7 @@ class Ball(t.Turtle):
         
 
     def bounce_wall(self):
-        x = self.xcor()
-        y = self.ycor()
         self.yspeed = self.yspeed * -1
+    
+    def bounce_paddle(self):
+        self.xspeed = self.xspeed * -1
