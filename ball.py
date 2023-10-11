@@ -8,11 +8,17 @@ class Ball(t.Turtle):
         self.goto(0,0)
         self.shape("circle")
         self.color("white")
+        self.xspeed = 1
+        self.yspeed = 1
         
 
     def move_ball(self):
         x = self.xcor()
         y = self.ycor()
+        self.goto(x+10 * self.xspeed ,y+10 * self.yspeed)
         
-        self.goto(x-5,y+5)
-        self.forward(20)
+
+    def bounce_wall(self):
+        x = self.xcor()
+        y = self.ycor()
+        self.yspeed = self.yspeed * -1
