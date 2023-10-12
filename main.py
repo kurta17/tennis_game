@@ -14,8 +14,10 @@ paddle_right = Paddle(350,0)
 score_l = Score_Left()
 score_r = Score_Right()
 
-
+# def quit_game():
+#     print("goodbye")
 screen= t.Screen()
+screen.tracer(0)
 screen.setup(800,600)
 screen.bgcolor("black")
 
@@ -26,6 +28,13 @@ screen.onkey(paddle_left.move_up, "w")
 screen.onkey(paddle_left.move_down, "s")
 
 line.drow_line()
+
+        
+def move_left_paddle(): 
+    if ball.ycor() > paddle_left.ycor():
+        paddle_left.move_up() 
+    elif ball.ycor() < paddle_left.ycor():
+        paddle_left.move_down()
 
 while True:
     screen.tracer(0)
@@ -58,6 +67,7 @@ while True:
         score_l.print_score()
         screen.tracer(0)
         screen.update()
+    move_left_paddle()
 
 
     
