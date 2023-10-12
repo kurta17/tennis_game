@@ -4,6 +4,7 @@ from line import Lines
 from paddle import Paddle
 from score_board import Score_Left
 from score_board import Score_Right
+from score_board import Score
 import time
 
 ball = Ball()
@@ -13,10 +14,11 @@ paddle_right = Paddle(350,0)
 score_l = Score_Left()
 score_r = Score_Right()
 
+
 screen= t.Screen()
 screen.setup(800,600)
 screen.bgcolor("black")
-screen.tracer(0)
+
 screen.listen()
 screen.onkey(paddle_right.move_up, "Up")
 screen.onkey(paddle_right.move_down, "Down")
@@ -26,10 +28,11 @@ screen.onkey(paddle_left.move_down, "s")
 line.drow_line()
 
 while True:
+    screen.tracer(0)
     screen.update()
     time.sleep(0.05)
 
-    if ball.distance(paddle_right) < 40 and ball.xcor() > 320 and paddle_right.xcor() > ball.xcor() or ball.distance(paddle_left) < 40 and ball.xcor() < -320 and paddle_left.xcor() < ball.xcor():
+    if ball.distance(paddle_right) < 62 and ball.xcor() > 330 and paddle_right.xcor() > ball.xcor() or ball.distance(paddle_left) < 62 and ball.xcor() < -330 and paddle_left.xcor() < ball.xcor():
         ball.bounce_paddle()
 
     ball.move_ball()
@@ -38,14 +41,26 @@ while True:
         ball.bounce_wall()
         
     elif ball.xcor() > 400:
+        screen.tracer(1)
+        score_l.game_over(screen.update)
         ball.goto(0,0)
         score_l.score +=1
         score_l.print_score()
-        
+        score_r.print_score()
+        screen.tracer(0)
+        screen.update()
     elif ball.xcor() < -400:
+        screen.tracer(1)
+        score_l.game_over(screen.update)
         ball.goto(0,0)
         score_r.score += 1
         score_r.print_score()
+        score_l.print_score()
+        screen.tracer(0)
+        screen.update()
+
+
+    
 
         
 
