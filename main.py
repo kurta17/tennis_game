@@ -4,10 +4,17 @@ from line import Lines
 from paddle import Paddle
 from score_board import Score_Left
 from score_board import Score_Right
-from score_board import Score
-import time
 
-ball = Ball()
+def quit_game():
+    print("goodbye")
+    screen.bye()
+
+screen= t.Screen()
+screen.tracer(0)
+
+
+
+ball = Ball(ball_speed = 0.2)
 line = Lines()
 paddle_left = Paddle(-350,0)
 paddle_right = Paddle(350,0)
@@ -15,14 +22,11 @@ score_l = Score_Left()
 score_r = Score_Right()
 
 
-screen= t.Screen()
-screen.tracer(0)
+
 screen.setup(800,600)
 screen.bgcolor("black")
 
-def quit_game():
-    print("goodbye")
-    screen.bye()
+
 
 screen.listen()
 screen.onkey(paddle_right.move_up, "Up")
@@ -35,18 +39,19 @@ line.drow_line()
 
         
 def move_left_paddle(): 
-    if ball.ycor() > paddle_left.ycor():
+    if ball.ycor() > paddle_left.ycor() and ball.xcor() < -100:
         paddle_left.move_up() 
-    elif ball.ycor() < paddle_left.ycor():
+    elif ball.ycor() < paddle_left.ycor() and ball.xcor() < -100:
         paddle_left.move_down()
 
 while True:
     screen.tracer(0)
     screen.update()
-    time.sleep(0.05)
 
     if ball.distance(paddle_right) < 62 and ball.xcor() > 330 and paddle_right.xcor() > ball.xcor() or ball.distance(paddle_left) < 62 and ball.xcor() < -330 and paddle_left.xcor() < ball.xcor():
         ball.bounce_paddle()
+        ball.speed_ball()
+
 
     ball.move_ball()
     
@@ -61,7 +66,9 @@ while True:
         score_l.print_score()
         score_r.print_score()
         screen.tracer(0)
+        ball.reset_speed()
         screen.update()
+
     elif ball.xcor() < -400:
         screen.tracer(1)
         score_l.game_over(screen.update)
@@ -70,7 +77,9 @@ while True:
         score_r.print_score()
         score_l.print_score()
         screen.tracer(0)
+        ball.reset_speed()
         screen.update()
+
     move_left_paddle()
 
 
