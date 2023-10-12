@@ -14,18 +14,22 @@ paddle_right = Paddle(350,0)
 score_l = Score_Left()
 score_r = Score_Right()
 
-# def quit_game():
-#     print("goodbye")
+
 screen= t.Screen()
 screen.tracer(0)
 screen.setup(800,600)
 screen.bgcolor("black")
+
+def quit_game():
+    print("goodbye")
+    screen.bye()
 
 screen.listen()
 screen.onkey(paddle_right.move_up, "Up")
 screen.onkey(paddle_right.move_down, "Down")
 screen.onkey(paddle_left.move_up, "w")
 screen.onkey(paddle_left.move_down, "s")
+screen.onkey(quit_game, key= "q")
 
 line.drow_line()
 
